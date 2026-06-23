@@ -1,1 +1,176 @@
-sfjiofj
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday ✨</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ========== LOADING SCREEN ========== -->
+  <div class="loading-screen" id="loadingScreen" aria-live="polite" role="status">
+    <div class="loading-inner">
+      <div class="loading-orb"></div>
+      <p class="loading-line line-1" id="loadingLine1">✨ Preparing Something Special...</p>
+      <p class="loading-line line-2" id="loadingLine2">For Someone Truly Special...</p>
+      <div class="loading-bar-track">
+        <div class="loading-bar-fill" id="loadingBarFill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== MAIN PAGE ========== -->
+  <main class="main-page" id="mainPage" aria-hidden="true">
+
+    <!-- Gold Particle Canvas -->
+    <canvas class="particle-canvas" id="particleCanvas" aria-hidden="true"></canvas>
+
+    <!-- ========== HEADER ========== -->
+    <header class="site-header">
+      <div class="header-inner">
+        <span class="header-logo" aria-label="Birthday celebration">✨</span>
+
+        <!-- Music Toggle -->
+        <button class="music-toggle" id="musicToggle" aria-label="Toggle background music" title="Toggle Music">
+          <span class="music-icon" id="musicIcon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true">
+              <path d="M9 3v10.55A4 4 0 1 0 11 17V7h4V3H9z"/>
+            </svg>
+          </span>
+          <span class="music-label" id="musicLabel">Play Music</span>
+        </button>
+
+        <audio id="bgMusic" loop preload="none">
+          <source src="assets/music/birthday.mp3" type="audio/mpeg" />
+        </audio>
+      </div>
+    </header>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section class="hero-section" aria-labelledby="heroHeading">
+      <div class="hero-content">
+
+        <p class="hero-pre-title" aria-hidden="true">✨ &nbsp; Happy Birthday &nbsp; ✨</p>
+
+        <h1 class="hero-name" id="heroHeading">
+          <span class="hero-name-inner">Name</span>
+        </h1>
+
+        <p class="hero-subtitle">A celebration crafted especially for you 💘</p>
+
+        <div class="hero-divider" aria-hidden="true">
+          <span class="divider-line"></span>
+          <span class="divider-gem">◆</span>
+          <span class="divider-line"></span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== DOOR TRANSITION TEXT ========== -->
+    <div class="door-transition-text" aria-hidden="true">
+      <p class="door-transition-line">Every beautiful story begins with a single, golden step.</p>
+    </div>
+
+    <!-- ========== GOLDEN DOOR ========== -->
+    <section class="door-section" aria-label="Enter the birthday experience">
+      <div class="door-stage" id="doorStage">
+
+        <!-- Door Surround: ambient glow layer behind everything -->
+        <div class="door-surround" id="doorSurround" aria-hidden="true">
+          <div class="door-surround-glow"></div>
+        </div>
+
+        <!-- Door Wrapper: contains frame + all inner elements -->
+        <div class="door-wrapper" id="doorWrapper">
+
+          <!-- Door Frame -->
+          <div class="door-frame" id="doorFrame" tabindex="0" role="button" aria-label="Open the golden door and enter the celebration">
+
+            <!-- Ambient Glow on the door face -->
+            <div class="door-glow" aria-hidden="true"></div>
+
+            <!-- Double Door Panels -->
+            <div class="door-panel" id="doorPanel" aria-hidden="true">
+              <div class="door-panel-left" id="doorLeft">
+                <div class="door-panel-inset door-panel-inset--top"></div>
+                <div class="door-panel-inset door-panel-inset--bottom"></div>
+              </div>
+              <div class="door-panel-right" id="doorRight">
+                <div class="door-panel-inset door-panel-inset--top"></div>
+                <div class="door-panel-inset door-panel-inset--bottom"></div>
+              </div>
+            </div>
+
+            <!-- Door Face Content (visible before open) -->
+            <div class="door-face" id="doorFace">
+              <span class="door-icon" aria-hidden="true">🚪</span>
+              <span class="door-text">Enter Celebration</span>
+              <span class="door-hint">Tap to open</span>
+              <!-- BEFORE -->
+             <span class="door-icon">🚪</span>
+
+             <!-- AFTER -->
+             <span class="door-icon" aria-hidden="true">✦</span>
+            </div>
+
+            <!-- Door Handle (centred between the two panels) -->
+            <div class="door-handle" aria-hidden="true">
+              <div class="door-handle-inner"></div>
+            </div>
+
+            <!-- Golden Light Burst (triggered on open) -->
+            <div class="door-light-burst" id="doorLightBurst" aria-hidden="true">
+              <div class="light-burst-core"></div>
+              <div class="light-burst-rays"></div>
+            </div>
+
+          </div>
+          <!-- /door-frame -->
+
+        </div>
+        <!-- /door-wrapper -->
+
+        <!-- Door Caption -->
+        <p class="door-caption" aria-hidden="true">Beyond this door lies a celebration made just for you.</p>
+
+      </div>
+      <!-- /door-stage -->
+    </section>
+
+    <!-- ========== EASTER EGG ========== -->
+    <button
+      class="easter-egg"
+      id="easterEgg"
+      aria-label="Secret surprise"
+      title="What's this?"
+      tabindex="0"
+    >★</button>
+
+    <!-- Easter Egg Tooltip -->
+    <div class="easter-egg-toast" id="easterEggToast" role="status" aria-live="polite" aria-atomic="true">
+      <span class="toast-icon">✨</span>
+      <span class="toast-message">The best surprises are still ahead...</span>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="site-footer" aria-label="Footer">
+      <p class="footer-text">Crafted with <span class="footer-heart" aria-label="love">♥</span> and a little Magic</p>
+    </footer>
+
+    <!-- ========== PAGE TRANSITION OVERLAY ========== -->
+    <div class="page-transition" id="pageTransition" aria-hidden="true"></div>
+
+  </main>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script src="js/main.js"></script>
+
+</body>
+</html>
+```

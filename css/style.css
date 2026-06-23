@@ -1,0 +1,1293 @@
+/* ============================================================
+   style.css — Luxury Birthday Website
+   Global styles, layout, typography, colors, sizing, shadows
+   NO animation keyframes. NO media queries.
+   ============================================================ */
+
+
+/* ============================================================
+   1. CSS CUSTOM PROPERTIES
+   ============================================================ */
+
+:root {
+  /* Color Palette */
+  --color-bg:              #0F0F0F;
+  --color-bg-secondary:    #1C1C1C;
+  --color-gold:            #D4AF37;
+  --color-gold-bright:     #F4C430;
+  --color-gold-dim:        #9A7D1E;
+  --color-gold-muted:      rgba(212, 175, 55, 0.15);
+  --color-gold-glow:       rgba(212, 175, 55, 0.35);
+  --color-gold-glow-soft:  rgba(212, 175, 55, 0.12);
+  --color-text-primary:    #FFF8E7;
+  --color-text-secondary:  #CFCFCF;
+  --color-text-muted:      #888888;
+  --color-white:           #FFFFFF;
+  --color-overlay:         rgba(15, 15, 15, 0.92);
+
+  /* Typography */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body:    'Poppins', system-ui, sans-serif;
+
+  /* Type Scale */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-md:   1.125rem;
+  --text-lg:   1.375rem;
+  --text-xl:   1.75rem;
+  --text-2xl:  2.25rem;
+  --text-3xl:  3rem;
+  --text-4xl:  4rem;
+  --text-5xl:  5.5rem;
+
+  /* Spacing */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* Borders */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   16px;
+  --radius-full: 9999px;
+  --border-gold: 1px solid rgba(212, 175, 55, 0.4);
+  --border-gold-strong: 1px solid rgba(212, 175, 55, 0.75);
+
+  /* Shadows */
+  --shadow-gold-sm:  0 0 12px rgba(212, 175, 55, 0.25);
+  --shadow-gold-md:  0 0 30px rgba(212, 175, 55, 0.35);
+  --shadow-gold-lg:  0 0 60px rgba(212, 175, 55, 0.4);
+  --shadow-gold-xl:  0 0 100px rgba(212, 175, 55, 0.5);
+  --shadow-depth:    0 24px 64px rgba(0, 0, 0, 0.8);
+  --shadow-card:     0 8px 32px rgba(0, 0, 0, 0.6);
+
+  /* Transitions */
+  --ease-luxury: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast:    200ms;
+  --dur-base:    400ms;
+  --dur-slow:    700ms;
+  --dur-cinematic: 1200ms;
+
+  /* Door dimensions */
+  --door-width:  420px;
+  --door-height: 580px;
+}
+
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 400;
+  line-height: 1.7;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  /* Premium text rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img, video {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+a {
+  color: var(--color-gold);
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(212, 175, 55, 0.3);
+  color: var(--color-text-primary);
+}
+
+
+/* ============================================================
+   3. LOADING SCREEN
+   ============================================================ */
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg);
+  background-image: radial-gradient(
+    ellipse 80% 60% at 50% 50%,
+    rgba(212, 175, 55, 0.06) 0%,
+    transparent 70%
+  );
+}
+
+.loading-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  text-align: center;
+  padding: var(--space-8);
+}
+
+.loading-orb {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    var(--color-gold-bright) 0%,
+    var(--color-gold) 45%,
+    var(--color-gold-dim) 100%
+  );
+  box-shadow:
+    0 0 20px rgba(212, 175, 55, 0.6),
+    0 0 50px rgba(212, 175, 55, 0.3),
+    0 0 90px rgba(212, 175, 55, 0.15);
+}
+
+.loading-line {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-style: italic;
+  color: var(--color-text-primary);
+  letter-spacing: 0.02em;
+  opacity: 0;
+}
+
+.loading-line.line-1 {
+  font-size: var(--text-md);
+  font-family: var(--font-body);
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+}
+
+.loading-line.line-2 {
+  font-size: var(--text-xl);
+  color: var(--color-gold);
+}
+
+.loading-bar-track {
+  width: 200px;
+  height: 1px;
+  background: rgba(212, 175, 55, 0.2);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.loading-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(
+    90deg,
+    var(--color-gold-dim),
+    var(--color-gold-bright),
+    var(--color-gold)
+  );
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+}
+
+
+/* ============================================================
+   4. PARTICLE CANVAS
+   ============================================================ */
+
+.particle-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+}
+
+
+/* ============================================================
+   5. MAIN PAGE
+   ============================================================ */
+
+.main-page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* ============================================================
+   6. HEADER
+   ============================================================ */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: var(--space-5) var(--space-8);
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 15, 15, 0.85) 0%,
+    transparent 100%
+  );
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-logo {
+  font-size: var(--text-lg);
+  opacity: 0.8;
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+
+/* ============================================================
+   7. MUSIC TOGGLE
+   ============================================================ */
+
+.music-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-full);
+  border: var(--border-gold);
+  background: rgba(28, 28, 28, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--color-text-secondary);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    color var(--dur-fast) var(--ease-luxury),
+    border-color var(--dur-fast) var(--ease-luxury),
+    background var(--dur-fast) var(--ease-luxury),
+    box-shadow var(--dur-fast) var(--ease-luxury);
+}
+
+.music-toggle:hover,
+.music-toggle:focus-visible {
+  color: var(--color-gold);
+  border-color: rgba(212, 175, 55, 0.7);
+  background: rgba(212, 175, 55, 0.08);
+  box-shadow: var(--shadow-gold-sm);
+  outline: none;
+}
+
+.music-toggle.is-playing {
+  color: var(--color-gold);
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: var(--shadow-gold-sm);
+}
+
+.music-icon {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.music-label {
+  line-height: 1;
+}
+
+
+/* ============================================================
+   8. HERO SECTION
+   ============================================================ */
+
+.hero-section {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--space-24) + 60px) var(--space-8) var(--space-16);
+  text-align: center;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  max-width: 700px;
+}
+
+.hero-pre-title {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  opacity: 0.85;
+}
+
+.hero-name {
+  font-family: var(--font-heading);
+  font-size: var(--text-5xl);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+}
+
+.hero-name-inner {
+  display: inline-block;
+  background: linear-gradient(
+    135deg,
+    var(--color-text-primary) 0%,
+    var(--color-gold-bright) 40%,
+    var(--color-gold) 60%,
+    var(--color-text-primary) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.3));
+}
+
+.hero-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: 300;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.06em;
+  max-width: 420px;
+}
+
+.hero-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 300px;
+  margin-top: var(--space-2);
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(212, 175, 55, 0.5),
+    transparent
+  );
+}
+
+.divider-gem {
+  font-size: var(--text-xs);
+  color: var(--color-gold);
+  opacity: 0.7;
+}
+
+
+/* ============================================================
+   9. DOOR TRANSITION TEXT
+   ============================================================ */
+
+.door-transition-text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  padding: 0 var(--space-8) var(--space-12);
+  text-align: center;
+}
+
+.door-transition-line {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: var(--text-lg);
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.04em;
+  max-width: 480px;
+  line-height: 1.8;
+  position: relative;
+}
+
+.door-transition-line::before,
+.door-transition-line::after {
+  content: '—';
+  display: inline-block;
+  color: var(--color-gold);
+  opacity: 0.5;
+  margin: 0 var(--space-3);
+  font-style: normal;
+}
+
+
+/* ============================================================
+   10. DOOR SECTION
+   ============================================================ */
+
+.door-section {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-8) var(--space-20);
+}
+
+/* Stage: the full scene container */
+.door-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+/* Surround: the wide ambient glow that fills the scene */
+.door-surround {
+  position: absolute;
+  inset: -80px -120px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.door-surround-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 50%,
+    rgba(212, 175, 55, 0.1) 0%,
+    rgba(212, 175, 55, 0.04) 50%,
+    transparent 75%
+  );
+}
+
+/* Wrapper: isolates the door for transform animations */
+.door-wrapper {
+  position: relative;
+  z-index: 1;
+  width: var(--door-width);
+  height: var(--door-height);
+}
+
+/* Frame: the gold-bordered door structure */
+.door-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  cursor: pointer;
+  outline: none;
+
+  /* Layered gold border */
+  border: 2px solid var(--color-gold);
+  box-shadow:
+    /* inner glow */
+    inset 0 0 30px rgba(212, 175, 55, 0.08),
+    /* outer glow layers */
+    0 0 0 1px rgba(212, 175, 55, 0.15),
+    0 0 20px rgba(212, 175, 55, 0.3),
+    0 0 50px rgba(212, 175, 55, 0.2),
+    0 0 100px rgba(212, 175, 55, 0.1),
+    /* depth shadow */
+    var(--shadow-depth);
+
+  /* Architectural arch: use clip-path for top arch feel */
+  overflow: hidden;
+  background: var(--color-bg-secondary);
+  transition:
+    box-shadow var(--dur-slow) var(--ease-luxury),
+    transform var(--dur-slow) var(--ease-luxury);
+}
+
+.door-frame::before {
+  /* Ornate top arch border */
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    var(--color-gold-bright) 0%,
+    var(--color-gold) 30%,
+    var(--color-gold-dim) 70%,
+    var(--color-gold) 100%
+  );
+  z-index: -1;
+  opacity: 0.9;
+}
+
+.door-frame::after {
+  /* Double-border inner rule */
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: calc(var(--radius-md) - 4px) calc(var(--radius-md) - 4px) 0 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.door-frame:hover {
+  transform: translateY(-4px) scale(1.005);
+  box-shadow:
+    inset 0 0 40px rgba(212, 175, 55, 0.12),
+    0 0 0 1px rgba(212, 175, 55, 0.25),
+    0 0 30px rgba(212, 175, 55, 0.5),
+    0 0 70px rgba(212, 175, 55, 0.35),
+    0 0 130px rgba(212, 175, 55, 0.2),
+    0 32px 80px rgba(0, 0, 0, 0.9);
+}
+
+.door-frame:focus-visible {
+  box-shadow:
+    inset 0 0 40px rgba(212, 175, 55, 0.12),
+    0 0 0 3px var(--color-gold),
+    0 0 40px rgba(212, 175, 55, 0.5),
+    var(--shadow-depth);
+}
+
+/* Ambient glow layer inside door */
+.door-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 30%,
+    rgba(212, 175, 55, 0.08) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Door Panels — the two sides that open */
+.door-panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  z-index: 2;
+}
+
+.door-panel-left,
+.door-panel-right {
+  flex: 1;
+  height: 100%;
+  background: linear-gradient(
+    160deg,
+    #252520 0%,
+    #1a1a16 40%,
+    #111110 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: var(--space-8) var(--space-5);
+  gap: var(--space-6);
+  transform-origin: left center;
+  transition: transform var(--dur-cinematic) var(--ease-out);
+  will-change: transform;
+  position: relative;
+  overflow: hidden;
+}
+
+.door-panel-left::before {
+  /* Vertical wood-grain/metal shimmer */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 30%;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(212, 175, 55, 0.15) 20%,
+    rgba(212, 175, 55, 0.08) 50%,
+    rgba(212, 175, 55, 0.15) 80%,
+    transparent
+  );
+}
+
+.door-panel-right {
+  transform-origin: right center;
+  background: linear-gradient(
+    200deg,
+    #111110 0%,
+    #1a1a16 40%,
+    #252520 100%
+  );
+}
+
+.door-panel-right::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 30%;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(212, 175, 55, 0.15) 20%,
+    rgba(212, 175, 55, 0.08) 50%,
+    rgba(212, 175, 55, 0.15) 80%,
+    transparent
+  );
+}
+
+/* Centre divider between the two panels */
+.door-panel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    var(--color-gold-dim),
+    var(--color-gold),
+    var(--color-gold-bright),
+    var(--color-gold),
+    var(--color-gold-dim)
+  );
+  opacity: 0.7;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Panel insets — decorative recessed panels */
+.door-panel-inset {
+  width: 100%;
+  height: 40%;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: var(--radius-sm);
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba(212, 175, 55, 0.03) 0%,
+    transparent 100%
+  );
+  box-shadow:
+    inset 0 1px 4px rgba(0, 0, 0, 0.5),
+    0 1px 0 rgba(212, 175, 55, 0.1);
+}
+
+.door-panel-inset::before {
+  /* Inner highlight edge */
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  border-radius: calc(var(--radius-sm) - 2px);
+}
+
+.door-panel-inset--top {
+  height: 55%;
+}
+
+.door-panel-inset--bottom {
+  height: 35%;
+}
+
+/* Door Face: centered CTA text over the closed panels */
+.door-face {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  text-align: center;
+  pointer-events: none;
+  padding: var(--space-8);
+}
+
+
+.door-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.5));
+}
+
+.door-text {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-gold-bright);
+  text-shadow:
+    0 0 20px rgba(212, 175, 55, 0.6),
+    0 2px 8px rgba(0, 0, 0, 0.8);
+  text-transform: uppercase;
+}
+
+.door-hint {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  opacity: 0.6;
+}
+
+/* Door Handle */
+.door-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 8;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.door-handle-inner {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    var(--color-gold-bright),
+    var(--color-gold),
+    var(--color-gold-dim)
+  );
+  box-shadow:
+    0 0 8px rgba(212, 175, 55, 0.7),
+    0 0 16px rgba(212, 175, 55, 0.4),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* Light Burst: revealed when door opens */
+.door-light-burst {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 1000ms ease 400ms; /* ← ADD THIS LINE */
+}
+
+.light-burst-core {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    #fff8e7 0%,
+    var(--color-gold-bright) 30%,
+    var(--color-gold) 60%,
+    transparent 100%
+  );
+  filter: blur(8px);
+}
+
+.light-burst-rays {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 90% at 50% 50%,
+    rgba(244, 196, 48, 0.5) 0%,
+    rgba(212, 175, 55, 0.25) 30%,
+    rgba(212, 175, 55, 0.08) 60%,
+    transparent 80%
+  );
+}
+
+/* Door Caption */
+.door-caption {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: var(--text-base);
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.05em;
+  text-align: center;
+  opacity: 0.65;
+  max-width: 380px;
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+}
+
+/* Door open state classes (triggered by JS) */
+.door-frame.door-is-open .door-panel-left {
+  transform: perspective(1200px) rotateY(-110deg);
+}
+
+.door-frame.door-is-open .door-panel-right {
+  transform: perspective(1200px) rotateY(110deg);
+}
+
+.door-frame.door-is-open .door-face {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.door-frame.door-is-open .door-light-burst {
+  opacity: 1;
+}
+
+
+/* ============================================================
+   11. EASTER EGG
+   ============================================================ */
+
+.easter-egg {
+  position: fixed;
+  bottom: var(--space-12);
+  right: var(--space-8);
+  z-index: 50;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-base);
+  color: var(--color-gold);
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.3;
+  filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.4));
+  transition:
+    opacity var(--dur-base) var(--ease-luxury),
+    filter var(--dur-base) var(--ease-luxury),
+    transform var(--dur-base) var(--ease-luxury);
+  user-select: none;
+}
+
+.easter-egg:hover,
+.easter-egg:focus-visible {
+  opacity: 0.9;
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8));
+  transform: scale(1.2);
+  outline: none;
+}
+
+.easter-egg-toast {
+  position: fixed;
+  bottom: calc(var(--space-12) + 44px);
+  right: var(--space-8);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  background: rgba(28, 28, 28, 0.92);
+  border: var(--border-gold);
+  border-radius: var(--radius-full);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    var(--shadow-gold-sm),
+    var(--shadow-card);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(6px);
+  transition:
+    opacity var(--dur-base) var(--ease-luxury),
+    transform var(--dur-base) var(--ease-luxury);
+  white-space: nowrap;
+}
+
+.easter-egg-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-icon {
+  font-size: var(--text-sm);
+}
+
+.toast-message {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: var(--text-sm);
+  color: var(--color-gold);
+  letter-spacing: 0.03em;
+}
+
+
+/* ============================================================
+   12. FOOTER
+   ============================================================ */
+
+.site-footer {
+  position: relative;
+  z-index: 1;
+  padding: var(--space-8) var(--space-8) var(--space-10);
+  text-align: center;
+}
+
+.footer-text {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.footer-heart {
+  color: var(--color-gold);
+  opacity: 0.8;
+}
+
+
+/* ============================================================
+   13. PAGE TRANSITION OVERLAY
+   ============================================================ */
+
+.page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: var(--color-bg);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-luxury);
+}
+
+.page-transition.is-active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+
+/* ============================================================
+   14. GLASS UTILITY
+   ============================================================ */
+
+.glass {
+  background: rgba(28, 28, 28, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: var(--border-gold);
+  border-radius: var(--radius-lg);
+}
+
+
+/* ============================================================
+   15. SCROLL & OVERFLOW GUARDS
+   ============================================================ */
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+/* ============================================================
+   CINEMATIC UPGRADES — append to bottom of style.css
+   ============================================================ */
+
+/* CHANGE 1 — Massive cinematic door */
+:root {
+  --door-width:  540px;
+  --door-height: 740px;
+}
+
+/* CHANGE 2 — Hero dominates first screen */
+.hero-section {
+  min-height: 90vh;
+  padding-top: calc(var(--space-24) + 80px);
+  padding-bottom: var(--space-20);
+  align-items: center;
+}
+
+/* CHANGE 3 — Iconic hero name */
+.hero-name {
+  font-size: 6.5rem;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+/* CHANGE 4 — True palace arch */
+.door-frame {
+  border-radius: 270px 270px 0 0;
+}
+
+.door-frame::after {
+  border-radius: 262px 262px 0 0;
+}
+
+.door-panel-left,
+.door-panel-right {
+  border-radius: 0;
+}
+
+/* Arch clip so panels don't bleed outside the arch shape */
+.door-panel {
+  border-radius: 268px 268px 0 0;
+  overflow: hidden;
+}
+
+/* CHANGE 5 — Wider, more cinematic ambient glow */
+.door-surround {
+  inset: -160px -220px;
+}
+
+.door-surround-glow {
+  background: radial-gradient(
+    ellipse 85% 70% at 50% 50%,
+    rgba(212, 175, 55, 0.18) 0%,
+    rgba(212, 175, 55, 0.08) 40%,
+    rgba(212, 175, 55, 0.03) 65%,
+    transparent 80%
+  );
+}
+
+/* CHANGE 6 — Premium background depth */
+body {
+  background-image:
+    radial-gradient(
+      ellipse 100% 60% at 50% 0%,
+      rgba(212, 175, 55, 0.04) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 70% 40% at 50% 100%,
+      rgba(212, 175, 55, 0.025) 0%,
+      transparent 60%
+    );
+}
+
+/* CHANGE 7 — Quieter footer */
+.footer-text {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  opacity: 0.35;
+}
+
+/* CHANGE 8 — Remove emoji, use elegant symbol */
+.door-icon {
+  display: none;
+}
+/* ============================================================
+   FINAL CINEMATIC DOOR OVERRIDES
+   ============================================================ */
+
+/* Huge hero */
+.hero-section{
+    min-height:75vh;
+    padding-top:160px;
+    padding-bottom:80px;
+}
+
+/* Bigger title */
+.hero-name{
+    font-size:7rem;
+    line-height:1;
+}
+
+/* Door section */
+.door-section{
+    min-height:100vh;
+    padding-top:40px;
+}
+
+/* Massive door */
+:root{
+    --door-width:620px;
+    --door-height:820px;
+}
+
+/* Stage */
+.door-stage{
+    gap:40px;
+}
+
+/* Surround glow */
+.door-surround{
+    inset:-250px -320px;
+}
+
+.door-surround-glow{
+    background:
+    radial-gradient(
+        ellipse 90% 75% at 50% 50%,
+        rgba(212,175,55,.25) 0%,
+        rgba(212,175,55,.12) 35%,
+        rgba(212,175,55,.04) 65%,
+        transparent 82%
+    );
+}
+
+/* Palace arch */
+.door-frame{
+    border-radius:320px 320px 0 0;
+    overflow:hidden;
+
+    border:2px solid rgba(212,175,55,.95);
+
+    background:
+    linear-gradient(
+        180deg,
+        #25231c 0%,
+        #161511 40%,
+        #0f0f0f 100%
+    );
+
+    box-shadow:
+    inset 0 0 40px rgba(212,175,55,.08),
+    0 0 30px rgba(212,175,55,.35),
+    0 0 90px rgba(212,175,55,.20),
+    0 0 180px rgba(212,175,55,.10),
+    0 40px 100px rgba(0,0,0,.85);
+}
+
+.door-frame::after{
+    border-radius:312px 312px 0 0;
+}
+
+/* Door panels */
+.door-panel{
+    border-radius:318px 318px 0 0;
+    overflow:hidden;
+}
+
+.door-panel-left,
+.door-panel-right{
+    background:
+    linear-gradient(
+        180deg,
+        #2b291f 0%,
+        #1a1914 45%,
+        #10100e 100%
+    );
+}
+
+/* Decorative gold lines */
+.door-panel-left::before,
+.door-panel-right::before{
+    width:2px;
+    opacity:.8;
+}
+
+/* Door text */
+.door-text{
+    font-size:2rem;
+    letter-spacing:.12em;
+    text-shadow:
+        0 0 20px rgba(212,175,55,.9),
+        0 0 40px rgba(212,175,55,.4);
+}
+
+/* Hint */
+.door-hint{
+    font-size:.8rem;
+    letter-spacing:.3em;
+    opacity:.8;
+}
+
+/* Elegant symbol */
+.door-icon{
+    display:block;
+    font-size:2rem;
+    color:var(--color-gold);
+    opacity:.85;
+}
+
+/* Caption */
+.door-caption{
+    font-size:1.1rem;
+    opacity:.75;
+}
+
+/* Strong open light */
+.light-burst-core{
+    width:180px;
+    height:180px;
+    filter:blur(20px);
+}
+
+.light-burst-rays{
+    background:
+    radial-gradient(
+        ellipse 100% 100% at 50% 50%,
+        rgba(255,248,231,.9) 0%,
+        rgba(244,196,48,.5) 20%,
+        rgba(212,175,55,.2) 50%,
+        transparent 80%
+    );
+}
+
+/* Debug visibility */
+.door-wrapper{
+    outline:1px solid rgba(255,0,0,.15);
+}
